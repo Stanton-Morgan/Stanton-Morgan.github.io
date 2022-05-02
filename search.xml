@@ -4,13 +4,50 @@
   
     
     <entry>
-      <title></title>
+      <title>Vishwa CTF记录</title>
       <link href="/2022/04/03/Vishwa%20CTF%E8%AE%B0%E5%BD%95/"/>
       <url>/2022/04/03/Vishwa%20CTF%E8%AE%B0%E5%BD%95/</url>
       
         <content type="html"><![CDATA[<h1>Vishwa CTF记录</h1><h2 id="Cryptography"><a class="header-anchor" href="#Cryptography">¶</a>Cryptography</h2><h3 id="1-John-The-Rocker"><a class="header-anchor" href="#1-John-The-Rocker">¶</a>1. John The Rocker</h3><p>无题目描述，<a href="https://github.com/Stanton-Morgan/CTF-Notes/blob/main/VishwaCTF-22/idrsa.id_rsa.docx">idrsa.id_rsa</a></p><p>思路：</p><ol><li>先将<code>id_rsa</code>文件转为hash</li><li>根据题目提示使用john the ripper爆破</li></ol><p>![image-20220403014053311](image/Vishwa CTF记录/John The Rocker.png)</p><h3 id="2-Tallest-Header"><a class="header-anchor" href="#2-Tallest-Header">¶</a>2. Tallest Header</h3><p>My friend sent me file and said how amazing this is, but i think while sending file corrupted. Can you help me fixing this? PS: make it lowercase<br><a href="https://github.com/Stanton-Morgan/CTF-Notes/blob/main/VishwaCTF-22/file.extension">file.extension</a></p><p>蛮经典的隐写题，用010Editor打开，不难猜到是一张jpg图片，将开头的HEX码改为jpg的格式标识，即可打开。</p><p>![](image/Vishwa CTF记录/file.jpg)</p><p><code>unzip file.jpg</code>把他分离，果然得到一些文件，得到加密方式以及密文，编写解码脚本也很容易：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># decrypt.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inverse_key</span>(<span class="params">key</span>):</span></span><br><span class="line">    inverse = []</span><br><span class="line">    <span class="keyword">for</span> position <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">min</span>(key),<span class="built_in">max</span>(key)+<span class="number">1</span>,<span class="number">1</span>):</span><br><span class="line">        inverse.append(key.index(position)+<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> inverse</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decrypt</span>(<span class="params">key, ciphertext</span>):</span></span><br><span class="line">    <span class="keyword">return</span> encrypt(inverse_key(key), ciphertext)</span><br><span class="line"><span class="built_in">print</span>(decrypt(key, ciphertext)</span><br><span class="line"><span class="comment"># 得到flag vishwaCTF&#123;tr1cky_h34d3r_w1th_p3rmu7at10n&#125;</span></span><br></pre></td></tr></table></figure><h3 id="3-Jumble-Bumble"><a class="header-anchor" href="#3-Jumble-Bumble">¶</a>3. Jumble Bumble</h3><p>Jumble Bumble been encode, get the flag from the code<br><a href="https://github.com/Stanton-Morgan/CTF-Notes/blob/main/VishwaCTF-22/JumbleBumble.txt">JumbleBumble.txt</a><br><a href="https://github.com/Stanton-Morgan/CTF-Notes/blob/main/VishwaCTF-22/script.py">script.py</a></p><p>暴力</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> inverse, long_to_bytes</span><br><span class="line"><span class="keyword">from</span> sympy <span class="keyword">import</span> integer_nthroot</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>, <span class="string">&quot;rb&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    n = <span class="built_in">int</span>(file.readline().strip())</span><br><span class="line">    c = <span class="built_in">int</span>(file.readline().strip())</span><br><span class="line">    dis = file.readline()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        ans = integer_nthroot(c, <span class="number">4</span>)</span><br><span class="line">        <span class="keyword">if</span> ans[<span class="number">1</span>]:</span><br><span class="line">            m = ans[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    plaintext = long_to_bytes(m).decode()</span><br><span class="line">    <span class="built_in">print</span>(plaintext)</span><br></pre></td></tr></table></figure><h3 id="4-Musical-Notes"><a class="header-anchor" href="#4-Musical-Notes">¶</a>4. Musical Notes</h3><p>Once I opened music website and found this image. There was SEA of images but this one seemed different.<br>There was written under this image that : listentocoolsong<br><a href="https://github.com/Stanton-Morgan/CTF-Notes/blob/main/VishwaCTF-22/image.png">image.png</a><br>Hint: All Chores Encloses Rare Encryption cipher</p><p>![image](image/Vishwa CTF记录/image.png)</p><p>这题实在没有思路，没见过的加密方法，</p><p>解码后：<code>5F6E8ACADC725F3515B9A302FE04FF3DF97D7F08A3BB6ABC4C168E0E14D5044F</code></p><p>题目中SEA暗示AES，secret key 为listentocoolsong……这题实在脑洞，Flag: vishwaCTF{mus1c4l_c1ph3r_1n_4ct10n}</p><h3 id="5"><a class="header-anchor" href="#5">¶</a>5.</h3>]]></content>
       
       
+      <categories>
+          
+          <category> CS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Cyber Security </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>COA</title>
+      <link href="/2022/01/25/COA%E4%B8%8A%E6%9C%BA%E7%AC%94%E8%AE%B0/"/>
+      <url>/2022/01/25/COA%E4%B8%8A%E6%9C%BA%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<p>复习折磨的COA上机考试整理的流程图，删去可惜，留与后人</p><p><img src="/.io//COA上机笔记/Transformer.png" alt="Transformer"></p><p><img src="/.io//COA上机笔记/ALU.png" alt="ALU"></p><p><img src="/.io//COA上机笔记/FPU.png" alt="FPU"></p><p><img src="/.io//COA上机笔记/MMU.png" alt="MMU"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SE </tag>
+            
+        </tags>
       
     </entry>
     
@@ -18,8 +55,8 @@
     
     <entry>
       <title>随笔</title>
-      <link href="/2021/12/17/12.11%E9%9A%8F%E7%AC%94/"/>
-      <url>/2021/12/17/12.11%E9%9A%8F%E7%AC%94/</url>
+      <link href="/2021/12/17/21.12.11%E9%9A%8F%E7%AC%94/"/>
+      <url>/2021/12/17/21.12.11%E9%9A%8F%E7%AC%94/</url>
       
         <content type="html"><![CDATA[<p>十二月初冬的天气，傍晚五六点的光景，正是云霞最好看的时候，夕阳遥遥悬在天边，飘着几朵碎云，被染成金红金红的，金得璀璨夺目，红得明艳动人</p><p>但这是一种，没有意义的美</p><p>没有意义在哪？</p><p>没有意义在，我既没有值得分享的人，也不想驻足拍下来把这一刻留住</p><p>学会把这些片刻写下来，而不是再去试图告诉谁</p><p>今天的晚霞很美，虽然它跟昨天前天，明天后天，或者无数个以前以后并没有什么不同</p><p>它一点都不特别</p><p>只是我吹着晚风，迎着人潮汹涌，走在街上，转头看向那晚霞的时候</p><p>感到莫名的萧索</p>]]></content>
       
@@ -144,6 +181,31 @@
     
     
     <entry>
+      <title>随笔</title>
+      <link href="/2021/09/25/21.09.25%E9%9A%8F%E7%AC%94/"/>
+      <url>/2021/09/25/21.09.25%E9%9A%8F%E7%AC%94/</url>
+      
+        <content type="html"><![CDATA[<p>游戏被封禁，我没有说话，我成年了；没想到刀这么快就落到日漫上了<br>历史将记取的社会转变的最大悲剧不是坏人的喧嚣，而是好人的沉默。——马丁路德金<br>沉默的人数越多，打破沉默就越难，因为当越来越多的人卷入沉默的漩涡，从这个漩涡中挣脱出来，需要的力气就越大。<br>房间里的大象愈发膨胀，一步步挤压着每一个人，我在这个房间里又能做些什么呢，大概唯有感恩</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 随笔 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>哈希</title>
       <link href="/2021/09/03/%E5%93%88%E5%B8%8C/"/>
       <url>/2021/09/03/%E5%93%88%E5%B8%8C/</url>
@@ -211,6 +273,31 @@
         <tags>
             
             <tag> Algorithm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>随笔</title>
+      <link href="/2021/07/05/%E9%9A%8F%E7%AC%94/"/>
+      <url>/2021/07/05/%E9%9A%8F%E7%AC%94/</url>
+      
+        <content type="html"><![CDATA[<p>もう終わった，从未想过会这样潦草收场，曾讥笑两三个月的快餐式恋爱，以为自己不一样，看来我错了（笑）是我不理解其中苦衷吧没有真正的对与错吧，有些矛盾无法解决，分歧在相处中只会愈发显现，一段感情意味着的责任也只有身处其中才能感受到，大概都累了吧</p><p>今年的春色因你而格外明艳，感谢从我的世界走过，お元気ですか、私は元気です，脑海莫名浮现一起去看的《情书》的名场景。</p><p>it’s probably for the best，我大概无法抽出精力给一场终究不会有结果的感情吧——不久前终于下定了留学的决心，或许没有那么多时间去玩闹了吧……</p><p>为了消磨时间<br>我们把自己投入于生活<br>自认为自己活着<br>仅仅为了消磨时间<br>我们培养出热爱或悲伤。</p><p>佩索阿真是看透了生活，但我从来便非俗人，不愿这般消磨，愿走出这井底</p><p>不知命运是否会让我在大学认识the one，更不知会是什么样的，不过我想，她应是能够陪我一同学习进步的吧，“绿鬓视草，红袖添香，眷属疑仙”，又甚至，她能陪我一起出国？学长学姐的事迹令人艳羡，双双赴美，只羡鸳鸯不羡仙……命运一向待我不薄，或许会遇到吧</p><p>这红酒后劲有点足，头居然这就晕了，晚安，南京</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 随笔 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
             
         </tags>
       
