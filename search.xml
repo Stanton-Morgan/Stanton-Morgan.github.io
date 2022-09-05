@@ -4,23 +4,23 @@
   
     
     <entry>
-      <title>mothers day</title>
-      <link href="/2022/05/07/mothers%20day/"/>
-      <url>/2022/05/07/mothers%20day/</url>
+      <title>R语言笔记</title>
+      <link href="/2022/07/23/R%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AE%B0/"/>
+      <url>/2022/07/23/R%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AE%B0/</url>
       
-        <content type="html"><![CDATA[<h1>mothers day</h1>]]></content>
+        <content type="html"><![CDATA[<h2 id="五数概括"><a class="header-anchor" href="#五数概括">¶</a>五数概括</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">summary(data$A)<span class="comment"># 五数</span></span><br><span class="line"></span><br><span class="line">mean(data$A) <span class="comment"># 均值</span></span><br><span class="line"></span><br><span class="line">median(data$A) <span class="comment">#中位数</span></span><br><span class="line"></span><br><span class="line">var(data$A) <span class="comment"># 方差</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 众数没有标准内置</span></span><br><span class="line">getmode &lt;- <span class="keyword">function</span>(v) &#123;</span><br><span class="line">  uniqv &lt;- unique(v)</span><br><span class="line">  uniqv[which.max(tabulate(match(v, uniqv)))]</span><br><span class="line">&#125;</span><br><span class="line">mode &lt;- getmode(mtcars$drat)</span><br></pre></td></tr></table></figure><h2 id="ggplot绘图"><a class="header-anchor" href="#ggplot绘图">¶</a>ggplot绘图</h2><h3 id="几何对象"><a class="header-anchor" href="#几何对象">¶</a>几何对象</h3><p>geom_bar: 柱状图，饼图</p><p>geom_boxplot: 箱型图</p><p>geom_histogram: 直方图</p><p>geom_freqpoly: 频线图</p><p>geom_density: 密度函数平滑估计图</p><p>geom_point: 散点图</p><p>geom_path/geom_line: 线图(数据出现顺序/横坐标大小)</p><p>geom_smooth: 平滑曲线拟合图</p><p>geom_contour:  等高线</p><h3 id="分面"><a class="header-anchor" href="#分面">¶</a>分面</h3><p>按类别变量的值分组，将绘图窗口划分成若干个子窗口，绘制没一个状态下的图</p><p>facet_wrap(<s>变量)，facet_wrap(变量1</s>变量2)</p><p>facet_wrap(~变量，nrow=行数, ncol=列数)</p><p>基本语法</p><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ggplot(data, aes(x=variable,y=variable, size/fill/color=variable))</span></span><br><span class="line"><span class="comment"># + geom_bar/histogram/…(color=, size=, fill=, shape=)</span></span><br><span class="line"><span class="comment"># + facet_warp(~变量，ncol=,nrow=) +labs(x=,y=,title=)</span></span><br><span class="line"></span><br><span class="line">ggplot(data = table,aes(x = 身高,y = 体重))+geom_point()</span><br></pre></td></tr></table></figure><h2 id="假设检验"><a class="header-anchor" href="#假设检验">¶</a>假设检验</h2><h3 id="点估计：求解方程"><a class="header-anchor" href="#点估计：求解方程">¶</a>点估计：求解方程</h3><ol><li>install.packages(‘rootSolve’) # 安装rootSolve程序包</li><li>library(rootSolve) # 载⼊包</li><li>用rootSolve包中的函数multiroot()求解方程组；</li></ol><p>例（均匀分布参数的矩估计）：X 服从[θ1, θ2]的均匀分布，现有10个样本：4, 5, 2, 9, 5, 1, 6, 4, 6, 2，估计参数θ1、θ2；</p><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">install.packages(<span class="string">&#x27;rootSolve’); library(rootSolve);</span></span><br><span class="line"><span class="string">x=c(4, 5, 2, 9, 5, 1, 6, 4, 6, 2);</span></span><br><span class="line"><span class="string">mu=mean(x);</span></span><br><span class="line"><span class="string">var=sum((x-mean(x))^2)/10;</span></span><br><span class="line"><span class="string">model = function(theta, mu, var)&#123;</span></span><br><span class="line"><span class="string">    c(F1 = theta[1] + theta[2] - 2 * mu, F2= (theta[2] - theta[1]) ^ 2 / 12 - var)</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">multiroot (f=model, start=c(0,10), mu=mu, var=var)</span></span><br></pre></td></tr></table></figure><h2 id="假设检验-v2"><a class="header-anchor" href="#假设检验-v2">¶</a>假设检验</h2><p>正态总体均值的假设检验：</p><ul><li><p>方差已知：z.test();</p></li><li><p>方差未知：t.test();</p></li><li><p>正态总体方差假设检验：var.test();</p></li></ul><p>➢    例（单个正态总体方差未知）：t.test(x, alternative = “less”, mu=103.5, sigma.x = Null, conf.level=0.95)</p><p>参数解释如下：<br>•    alternative用于指定备择假设的形式，默认为双边假设检验， less表示左边假设检验，greater表示右边假设检验；<br>•    mu表示均值，默认为0；<br>•    sigma.x指定样本标准差；<br>•    conf.level指定的1-𝛼，默认为1-0.05；</p>]]></content>
       
       
       <categories>
           
-          <category> 杂项 </category>
+          <category> CS </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 杂项 </tag>
+            <tag> R </tag>
             
         </tags>
       
@@ -248,31 +248,6 @@
         <tags>
             
             <tag> SE </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>随笔</title>
-      <link href="/2021/09/25/21.09.25%E9%9A%8F%E7%AC%94/"/>
-      <url>/2021/09/25/21.09.25%E9%9A%8F%E7%AC%94/</url>
-      
-        <content type="html"><![CDATA[<p>游戏被封禁，我没有说话，我成年了；没想到刀这么快就落到日漫上了<br>历史将记取的社会转变的最大悲剧不是坏人的喧嚣，而是好人的沉默。——马丁路德金<br>沉默的人数越多，打破沉默就越难，因为当越来越多的人卷入沉默的漩涡，从这个漩涡中挣脱出来，需要的力气就越大。<br>房间里的大象愈发膨胀，一步步挤压着每一个人，我在这个房间里又能做些什么呢，大概唯有感恩</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 随笔 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 随笔 </tag>
             
         </tags>
       
