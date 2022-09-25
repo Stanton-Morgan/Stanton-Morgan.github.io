@@ -1,0 +1,726 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>jyyOS-2 | 慎治の万事屋</title><meta name="keywords" content="OS"><meta name="author" content="浮世野指针"><meta name="copyright" content="浮世野指针"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="JYY操作系统：并发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jyyOS-2">
+<meta property="og:url" content="https://stantonjoy.github.io/2022/09/08/jyyOS-2/index.html">
+<meta property="og:site_name" content="慎治の万事屋">
+<meta property="og:description" content="JYY操作系统：并发">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://stantonjoy.github.io/img/Science.jpg">
+<meta property="article:published_time" content="2022-09-08T11:24:06.910Z">
+<meta property="article:modified_time" content="2022-09-15T10:35:39.345Z">
+<meta property="article:author" content="浮世野指针">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://stantonjoy.github.io/img/Science.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://stantonjoy.github.io/2022/09/08/jyyOS-2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'jyyOS-2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-15 18:35:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><!--音乐--><div class="aplayer" data-id="2916766519" data-server="netease" data-type="playlist" data-fixed="true" data-listFolded="false" data-order="random" data-preload="none"></div><link rel="stylesheet" href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css"><script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/favicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fab fa-battle-net"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/Science.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">慎治の万事屋</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fab fa-battle-net"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">jyyOS-2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-08T11:24:06.910Z" title="发表于 2022-09-08 19:24:06">2022-09-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-15T10:35:39.345Z" title="更新于 2022-09-15 18:35:39">2022-09-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS/">CS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="jyyOS-2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="并发的基本单位：线程"><a class="header-anchor" href="#并发的基本单位：线程">¶</a>并发的基本单位：线程</h2>
+<p>共享内存的多个执行流</p>
+<ul>
+<li>执行流拥有独立的堆栈/寄存器</li>
+<li>共享全部的内存 (指针可以互相引用)</li>
+</ul>
+<h1>入门：<code>thread.h</code> 简化的线程 API</h1>
+<ul>
+<li><code>create(fn)</code>
+<ul>
+<li>创建一个入口函数是 <code>fn</code> 的线程，并立即开始执行
+<ul>
+<li><code>void fn(int tid) &#123; ... &#125;</code></li>
+<li>参数 <code>tid</code> 从 1 开始编号</li>
+</ul>
+</li>
+<li>语义：在状态中新增 stack frame 列表并初始化为 <code>fn(tid)</code></li>
+</ul>
+</li>
+<li><code>join()</code>
+<ul>
+<li>等待所有运行线程的 <code>fn</code> 返回</li>
+<li>在 <code>main</code> 返回时会自动等待所有线程结束</li>
+<li>语义：在有其他线程未执行完时死循环，否则返回</li>
+</ul>
+</li>
+<li>编译时需要增加 <code>-lpthread</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdatomic.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NTHREAD 64</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span> T_FREE = <span class="number">0</span>, T_LIVE, T_DEAD, &#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">thread</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> id, status;</span><br><span class="line">  <span class="keyword">pthread_t</span> thread;</span><br><span class="line">  <span class="keyword">void</span> (*entry)(<span class="keyword">int</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">thread</span> <span class="title">tpool</span>[<span class="title">NTHREAD</span>], *<span class="title">tptr</span> =</span> tpool;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">wrapper</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">thread</span> *<span class="title">thread</span> =</span> (struct thread *)arg;</span><br><span class="line">  thread-&gt;entry(thread-&gt;id);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">(<span class="keyword">void</span> *fn)</span> </span>&#123;</span><br><span class="line">  assert(tptr - tpool &lt; NTHREAD);</span><br><span class="line">  *tptr = (struct thread) &#123;</span><br><span class="line">    .id = tptr - tpool + <span class="number">1</span>,</span><br><span class="line">    .status = T_LIVE,</span><br><span class="line">    .entry = fn,</span><br><span class="line">  &#125;;</span><br><span class="line">  pthread_create(&amp;(tptr-&gt;thread), <span class="literal">NULL</span>, wrapper, tptr);</span><br><span class="line">  ++tptr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">join</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; NTHREAD; i++) &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">thread</span> *<span class="title">t</span> =</span> &amp;tpool[i];</span><br><span class="line">    <span class="keyword">if</span> (t-&gt;status == T_LIVE) &#123;</span><br><span class="line">      pthread_join(t-&gt;thread, <span class="literal">NULL</span>);</span><br><span class="line">      t-&gt;status = T_DEAD;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">__attribute__((destructor)) <span class="function"><span class="keyword">void</span> <span class="title">cleanup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>放弃</h1>
+<h2 id="1-原子性"><a class="header-anchor" href="#1-原子性">¶</a>1. 原子性</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 100000000</span></span><br><span class="line"><span class="keyword">long</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Tsum</span><span class="params">()</span> </span>&#123; <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) sum++; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  create(Tsum);</span><br><span class="line">  create(Tsum);</span><br><span class="line">  join();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;sum = %ld\n&quot;</span>, sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>“程序 (甚至是一条指令) 独占处理器执行” 的基本假设在现代多处理器系统上不再成立。</strong></p>
+<p>原子性：一段代码执行 (例如 <code>pay()</code>) 独占整个计算机系统</p>
+<ul>
+<li>单处理器多线程
+<ul>
+<li>线程在运行时可能被中断，切换到另一个线程执行</li>
+</ul>
+</li>
+<li>多处理器多线程
+<ul>
+<li>线程根本就是并行执行的</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-顺序"><a class="header-anchor" href="#2-顺序">¶</a>2. 顺序</h2>
+<p>给sum添加编译优化？</p>
+<ul>
+<li><code>-O1</code>: 100000000 😱😱</li>
+<li><code>-O2</code>: 200000000 😱😱😱</li>
+</ul>
+<p>不同编译优化对并发的处理不同，O1可能是分别写入各自求和的结果</p>
+<p><strong>编译器对内存访问 “eventually consistent” 的处理导致共享内存作为线程同步工具的失效。</strong></p>
+<h2 id="3-可见性"><a class="header-anchor" href="#3-可见性">¶</a>3. 可见性</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">0</span>, y = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">T1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  x = <span class="number">1</span>;</span><br><span class="line">  <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">&quot;&quot;</span> : : <span class="string">&quot;memory&quot;</span>)</span></span>; <span class="comment">// compiler barrier</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;y = %d\n&quot;</span>, y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">T2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  y = <span class="number">1</span>;</span><br><span class="line">  <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">&quot;&quot;</span> : : <span class="string">&quot;memory&quot;</span>)</span></span>; <span class="comment">// compiler barrier</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;x = %d\n&quot;</span>, x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Tip：输出不好读？pipe to head -n 1000000 | sort | uniq -c</span></span><br></pre></td></tr></table></figure>
+<p>出现了状态机推理之外的结果：0 0</p>
+<p>现代处理器也是（动态）编译器，把汇编变为微指令μops，每个μop都有Fetch, Issue, Execute, Commit 四个阶段。</p>
+<p><strong>满足单处理器 eventual memory consistency 的执行，在多处理器上可能无法序列化！</strong></p>
+<p>导致可见性的丧失</p>
+<h1>互斥</h1>
+<h2 id="一个互斥算法——Peterson-算法"><a class="header-anchor" href="#一个互斥算法——Peterson-算法">¶</a>一个互斥算法——Peterson 算法</h2>
+<p>互斥：保证两个线程不能同时执行一段代码。</p>
+<h3 id="举例"><a class="header-anchor" href="#举例">¶</a>举例</h3>
+<p>A 和 B 争用厕所的包厢</p>
+<ol>
+<li>
+<p>想进入包厢之前，A/B 都要先举起自己的旗子</p>
+</li>
+<li>
+<p>A 确认旗子举好以后，往厕所门上贴上 “B 正在使用” 的标签</p>
+<p>B 确认旗子举好以后，往厕所门上贴上 “A 正在使用” 的标签</p>
+</li>
+<li>
+<p>然后，如果对方的旗子举起来，且门上的名字不是自己，等待</p>
+<p>否则可以进入包厢</p>
+</li>
+<li>
+<p>出包厢后，放下自己的旗子</p>
+</li>
+</ol>
+<ul>
+<li>如果只有一个人举旗，他就可以直接进入</li>
+<li>如果两个人同时举旗，由厕所门上的标签决定谁进
+<ul>
+<li>手快有 (被另一个人的标签覆盖)、手慢无</li>
+</ul>
+</li>
+</ul>
+<h2 id="硬件提供原子指令"><a class="header-anchor" href="#硬件提供原子指令">¶</a>硬件提供原子指令</h2>
+<p>例：Atomic exchange (load + store)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">xchg</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">int</span> *addr, <span class="keyword">int</span> newval)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result;</span><br><span class="line">  <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span> <span class="params">(<span class="string">&quot;lock xchg %0, %1&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">    : <span class="string">&quot;+m&quot;</span>(*addr), <span class="string">&quot;=a&quot;</span>(result) : <span class="string">&quot;1&quot;</span>(newval))</span></span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原子指令的模型</p>
+<ul>
+<li>保证之前的 store 都写入内存</li>
+<li>保证 load/store 不与原子指令乱序</li>
+</ul>
+<h2 id="自旋锁"><a class="header-anchor" href="#自旋锁">¶</a>自旋锁</h2>
+<h3 id="用-xchg-实现互斥"><a class="header-anchor" href="#用-xchg-实现互斥">¶</a>用 <code>xchg</code> 实现互斥</h3>
+<p>如何协调宿舍若干位同学上厕所问题？</p>
+<ul>
+<li>在厕所门口放一个桌子 (共享变量)
+<ul>
+<li>初始时，桌上是 🔑</li>
+</ul>
+</li>
+<li>每个人可以完成原子操作
+<ul>
+<li>拿一个任意东西与🔑交换（xchg）</li>
+</ul>
+</li>
+</ul>
+<p>实现互斥的协议</p>
+<ul>
+<li>想上厕所的同学 (一条 xchg 指令)
+<ul>
+<li>天黑请闭眼</li>
+<li>试图知道桌子上有什么 (🔑 或 🔞)</li>
+<li>把 🔞 放到桌上 (覆盖之前有的任何东西)</li>
+<li>天亮请睁眼；看到 🔑 才可以进厕所哦</li>
+</ul>
+</li>
+<li>出厕所的同学
+<ul>
+<li>把 🔑 放到桌上</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> table = YES;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">retry:</span><br><span class="line">  <span class="keyword">int</span> got = xchg(&amp;table, NOPE);</span><br><span class="line">  <span class="keyword">if</span> (got == NOPE)</span><br><span class="line">    <span class="keyword">goto</span> retry;</span><br><span class="line">  assert(got == YES);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">unlock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  xchg(&amp;table, YES)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简洁版</span></span><br><span class="line"><span class="keyword">int</span> locked = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span> </span>&#123; <span class="keyword">while</span> (xchg(&amp;locked, <span class="number">1</span>)) ; &#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">unlock</span><span class="params">()</span> </span>&#123; xchg(&amp;locked, <span class="number">0</span>); &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Load-Reserved-Store-Conditional-LR-SC"><a class="header-anchor" href="#Load-Reserved-Store-Conditional-LR-SC">¶</a>Load-Reserved/Store-Conditional (LR/SC)</h3>
+<p>LR: 在内存上标记 reserved (盯上你了)，中断、其他处理器写入都会导致标记消除</p>
+<p>SC: 如果 “盯上” 未被解除，则写入</p>
+<h3 id="自旋锁的缺陷"><a class="header-anchor" href="#自旋锁的缺陷">¶</a>自旋锁的缺陷</h3>
+<p>因为自旋锁的存在使得临界区的代码只能被串行执行，拿不到所的线程只能在CPU上空转，所以程序的性能受到了不小的影响，因此自旋锁一般用于管理比较短的临界区</p>
+<p>即：</p>
+<ol>
+<li>
+<p>自旋 (共享变量) 会触发处理器间的缓存同步，延迟增加</p>
+</li>
+<li>
+<ul>
+<li>除了进入临界区的线程，其他处理器上的线程都在空转</li>
+<li>争抢锁的处理器越多，利用率越低</li>
+</ul>
+</li>
+<li>
+<p>获得自旋锁的线程可能被操作系统切换出去，100%资源浪费</p>
+</li>
+</ol>
+<h3 id="自旋锁的使用场景"><a class="header-anchor" href="#自旋锁的使用场景">¶</a>自旋锁的使用场景</h3>
+<ul>
+<li>临界区几乎不 “拥堵”</li>
+<li>持有自旋锁时禁止执行流切换</li>
+</ul>
+<p>使用场景：操作系统内核的并发数据结构 (短临界区)</p>
+<h2 id="mutex（互斥锁-睡眠锁）"><a class="header-anchor" href="#mutex（互斥锁-睡眠锁）">¶</a>mutex（互斥锁/睡眠锁）</h2>
+<p>因此，我们要改进自旋锁的性能，从“程序就是状态机”的视角来看，拿不到自旋锁的线程所对应的状态机只会不可避免的一遍一遍地执行<code>xchg</code>指令，那我们不妨想办法修改它的状态机，让它在第一次尝试获得锁失败后就立刻执行<code>syscall</code>指令，陷入内核，让拥有高特权级的操作系统内核把其他线程换上CPU运行，就好像这个线程已经用完了它的时间片。这样的话，既不会改变状态机原有的状态，也把CPU资源留给了有用的计算。</p>
+<ul>
+<li><code>syscall(SYSCALL_lock, &amp;lk);</code>
+<ul>
+<li>试图获得 <code>lk</code>，但如果失败，就切换到其他线程</li>
+</ul>
+</li>
+<li><code>syscall(SYSCALL_unlock, &amp;lk);</code>
+<ul>
+<li>释放 <code>lk</code>，如果有等待锁的线程就唤醒</li>
+</ul>
+</li>
+</ul>
+<p>举例：操作系统 = 更衣室管理员</p>
+<ul>
+<li>先到的人 (线程)
+<ul>
+<li>成功获得手环，进入游泳馆</li>
+<li><code>*lk = 🔒</code>，系统调用直接返回</li>
+</ul>
+</li>
+<li>后到的人 (线程)
+<ul>
+<li>不能进入游泳馆，排队等待</li>
+<li>线程放入等待队列，执行线程切换 (yield)</li>
+</ul>
+</li>
+<li>洗完澡出来的人 (线程)
+<ul>
+<li>交还手环给管理员；管理员把手环再交给排队的人</li>
+<li>如果等待队列不空，从等待队列中取出一个线程允许执行</li>
+<li>如果等待队列为空，<code>*lk = ✅</code></li>
+</ul>
+</li>
+<li>管理员 (OS) 使用自旋锁确保自己处理手环的过程是原子的</li>
+</ul>
+<h2 id="自旋锁·睡眠锁分析"><a class="header-anchor" href="#自旋锁·睡眠锁分析">¶</a>自旋锁·睡眠锁分析</h2>
+<p>自旋锁 (线程直接共享 locked)</p>
+<ul>
+<li>更快的 fast path
+<ul>
+<li>xchg 成功 → 立即进入临界区，开销很小</li>
+</ul>
+</li>
+<li>更慢的 slow path
+<ul>
+<li>xchg 失败 → 浪费 CPU 自旋等待</li>
+</ul>
+</li>
+</ul>
+<p>在多处理器情况下，没有对锁的争用，也就是只有一个线程想获得锁，那么明显自旋锁更快，通过一条<code>xchg</code>原子指令就能获得/释放锁；如果出现了锁的争用，拥堵的越严重，自旋锁的性能就越差。</p>
+<hr>
+<p>睡眠锁 (通过系统调用访问 locked)</p>
+<ul>
+<li>更快的 slow path
+<ul>
+<li>上锁失败线程不再占用 CPU</li>
+</ul>
+</li>
+<li>更慢的 fast path
+<ul>
+<li>即便上锁成功也需要进出内核 (syscall)</li>
+<li>系统调用涉及到特权级的切换，页表的切换，栈指针的切换，etc. 系统调用这件事本身的开销就不小</li>
+</ul>
+</li>
+</ul>
+<h2 id="Futex-Fast-Userspace-muTexes"><a class="header-anchor" href="#Futex-Fast-Userspace-muTexes">¶</a>Futex: Fast Userspace muTexes</h2>
+<ul>
+<li>Fast path: 一条原子指令，上锁成功立即返回</li>
+<li>Slow path: 上锁失败，执行系统调用睡眠</li>
+</ul>
+<h1>同步</h1>
+<p>线程同步：在某个时间点共同达到互相已知的状态</p>
+<h2 id="生产者-消费者问题"><a class="header-anchor" href="#生产者-消费者问题">¶</a>生产者-消费者问题</h2>
+<p>并发软件开发场景中，有相当大一部分的并发问题本质上就是生产者-消费者问题。</p>
+<p>概述如下：有一个buffer，它的大小是固定的，此时系统中有两种类型的线程；</p>
+<ul>
+<li>生产者（producer），往buffer里丢东西</li>
+<li>消费者（consumer），从buffer里取东西</li>
+</ul>
+<p>因为buffer有大小限制，所以不能往里面丢太多东西，因此生产者在buffer满的时候就不能向其中再填入数据了，需要开始等待；当buffer空的时候，消费者也自然不会消费，因此也需要开始等待。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Tproduce</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">retry:</span><br><span class="line">    mutex_lock(&amp;lk);</span><br><span class="line">    <span class="keyword">if</span> (count == n) &#123;</span><br><span class="line">      mutex_unlock(&amp;lk);</span><br><span class="line">      <span class="keyword">goto</span> retry;</span><br><span class="line">    &#125;</span><br><span class="line">    count++;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;(&quot;</span>);</span><br><span class="line">    mutex_unlock(&amp;lk);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Tconsume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">retry:</span><br><span class="line">    mutex_lock(&amp;lk);</span><br><span class="line">    <span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">      mutex_unlock(&amp;lk);</span><br><span class="line">      <span class="keyword">goto</span> retry;</span><br><span class="line">    &#125;</span><br><span class="line">    count--;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;)&quot;</span>);</span><br><span class="line">    mutex_unlock(&amp;lk);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用互斥锁保持条件成立，但它还是有一个自旋的循环，尽管<code>lock</code>中不一定spin，但while循环做的事情就是spin，可以说是&quot;spin on the buffer&quot;</p>
+<h2 id="条件变量：万能同步方法"><a class="header-anchor" href="#条件变量：万能同步方法">¶</a>条件变量：万能同步方法</h2>
+<p>条件变量的设计，其实就是“锁+条件”</p>
+<p>把上文代码中的自旋变成睡眠，在完成操作时唤醒</p>
+<h3 id="条件变量-API"><a class="header-anchor" href="#条件变量-API">¶</a>条件变量 API</h3>
+<ul>
+<li>
+<p>wait(cv, mutex) 💤</p>
+<ul>
+<li>调用时必须保证已经获得 mutex</li>
+<li>释放 mutex、进入睡眠状态</li>
+</ul>
+<hr>
+<p><code>wait(fn)</code>这种，该api会一直监控<code>fn</code>，频繁地调用它，看它满足不满足条件，其内部实现可以是<code>while(!fn());</code>这样，所以看起来我们就可以保证“<code>wait</code>返回之后，<code>fn</code>对应的条件就成立了”。</p>
+<p>实则不然，这只能保证<code>fn</code>被调用的时候条件成立，但系统是并发的（可能有好几百个生产者/消费者），<code>fn</code>返回的时候也许条件就不再成立了，因此api不能这样设计。</p>
+<p>我们希望的是<code>wait</code>返回之后，相应的条件会在一段时间里持续地被满足，因此可以借助锁使得条件持续地被满足。<strong>条件变量的设计，其实就是“锁+条件”</strong></p>
+<p>因此，<code>wait</code>函数内部要做的事情就是：当发现条件不满足时进入睡眠，并且释放锁，等到条件满足时线程被唤醒，并且再次获得锁，从而在保持条件一直被满足，直到锁被释放。</p>
+<hr>
+</li>
+<li>
+<p>signal/notify(cv) 💬 私信：走起</p>
+<ul>
+<li>如果有线程正在等待 cv，则唤醒其中一个线程</li>
+</ul>
+</li>
+<li>
+<p>broadcast/notifyAll(cv) 📣 所有人：走起</p>
+<ul>
+<li>唤醒全部正在等待 cv 的线程</li>
+</ul>
+</li>
+</ul>
+<p>具体的代码框架如下，<code>cond</code>是我们要等待的条件。如果我们知道每个线程在等什么，并且能够知道其他的线程在什么时候可以让这个线程所等待的事情成立，就可以套用如下的框架去解决同步问题</p>
+<ul>
+<li>
+<p>需要等待条件满足时</p>
+<p><code>mutex_lock(&amp;mutex); while (!cond) &#123;   wait(&amp;cv, &amp;mutex); &#125; assert(cond); // ... // 互斥锁保证了在此期间条件 cond 总是成立 // ... mutex_unlock(&amp;mutex);</code></p>
+</li>
+<li>
+<p>其他线程条件可能被满足时</p>
+<p><code>broadcast(&amp;cv);</code></p>
+</li>
+</ul>
+<h3 id="习题"><a class="header-anchor" href="#习题">¶</a>习题</h3>
+<p>有三种线程，分别打印 <code>&lt;</code>, <code>&gt;</code>, 和 <code>_</code></p>
+<ul>
+<li>对这些线程进行同步，使得打印出的序列总是 <code>&lt;&gt;&lt;_</code> 和 <code>&gt;&lt;&gt;_</code> 组合</li>
+</ul>
+<hr>
+<p>使用条件变量，实现多个打印线程之间的同步，那么就需要分析出：每个线程得以继续向前执行时需要满足什么条件？</p>
+<p>也就是只要回答三个问题：</p>
+<ul>
+<li>打印 “<code>&lt;</code>” 的条件？</li>
+<li>打印 “<code>&gt;</code>” 的条件？</li>
+<li>打印 “<code>_</code>” 的条件？</li>
+</ul>
+<p>给我们期望中的系统构建一个状态机</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/20220912192044.png" alt></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">state</span> &#123;</span></span><br><span class="line">  A = <span class="number">1</span>, B, C, D, E, F,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rule</span> &#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">enum</span> <span class="title">state</span> <span class="title">from</span>;</span></span><br><span class="line">  <span class="keyword">char</span> ch;</span><br><span class="line">  <span class="class"><span class="keyword">enum</span> <span class="title">state</span> <span class="title">to</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rule</span> <span class="title">rules</span>[] =</span> &#123;</span><br><span class="line">  &#123; A, <span class="string">&#x27;&lt;&#x27;</span>, B &#125;,</span><br><span class="line">  &#123; B, <span class="string">&#x27;&gt;&#x27;</span>, C &#125;,</span><br><span class="line">  &#123; C, <span class="string">&#x27;&lt;&#x27;</span>, D &#125;,</span><br><span class="line">  &#123; A, <span class="string">&#x27;&gt;&#x27;</span>, E &#125;,</span><br><span class="line">  &#123; E, <span class="string">&#x27;&lt;&#x27;</span>, F &#125;,</span><br><span class="line">  &#123; F, <span class="string">&#x27;&gt;&#x27;</span>, D &#125;,</span><br><span class="line">  &#123; D, <span class="string">&#x27;_&#x27;</span>, A &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">state</span> <span class="title">current</span> =</span> A;</span><br><span class="line"><span class="keyword">int</span> quota = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pthread_mutex_t</span> lk   = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line"><span class="keyword">pthread_cond_t</span>  cond = PTHREAD_COND_INITIALIZER;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">next</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; LENGTH(rules); i++) &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rule</span> *<span class="title">rule</span> =</span> &amp;rules[i];</span><br><span class="line">    <span class="keyword">if</span> (rule-&gt;from == current &amp;&amp; rule-&gt;ch == ch) &#123;</span><br><span class="line">      <span class="keyword">return</span> rule-&gt;to;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fish_before</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>&#123;</span><br><span class="line">  pthread_mutex_lock(&amp;lk);</span><br><span class="line">  <span class="keyword">while</span> (next(ch) == <span class="number">0</span> || quota == <span class="number">0</span>) &#123;</span><br><span class="line">    pthread_cond_wait(&amp;cond, &amp;lk);</span><br><span class="line">  &#125;</span><br><span class="line">  quota--;</span><br><span class="line">  pthread_mutex_unlock(&amp;lk);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fish_after</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>&#123;</span><br><span class="line">  pthread_mutex_lock(&amp;lk);</span><br><span class="line">  quota++;</span><br><span class="line">  current = next(ch);</span><br><span class="line">  assert(current);</span><br><span class="line">  pthread_cond_broadcast(&amp;cond);</span><br><span class="line">  pthread_mutex_unlock(&amp;lk);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fish_init</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> roles[] = <span class="string">&quot;&lt;&lt;&lt;&lt;&lt;&gt;&gt;&gt;&gt;___&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fish_thread</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">char</span> role = roles[id];</span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    fish_before(role);</span><br><span class="line">    <span class="built_in">putchar</span>(role); <span class="comment">// should not hold *any* mutex lock now</span></span><br><span class="line">    fish_after(role);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>, <span class="literal">NULL</span>);</span><br><span class="line">  fish_init();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(roles); i++)</span><br><span class="line">    create(fish_thread);</span><br><span class="line">  join(<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>信号量（semaphore）</h1>
+<p>信号量的工作机制，可以直接理解成计数器（当然其实加锁的时候肯定不能这么简单，不只只是信号量了），信号量会有初值（&gt;0），每当有进程申请使用信号量，通过一个P操作来对信号量进行-1操作，当计数器减到0的时候就说明没有资源了，其他进程要想访问就必须等待（具体怎么等还有说法，比如忙等待或者睡眠），当该进程执行完这段工作（我们称之为临界区）之后，就会执行V操作来对信号量进行+1操作。</p>
+<p><strong>临界区</strong>：临界区指的是一个访问共用资源（例如：共用设备或是共用存储器）的程序片段，而这些共用资源又无法同时被多个线程访问的特性。</p>
+<p><strong>临界资源</strong>：只能被一个进程同时使用（不可以多个进程共享），要用到互斥。</p>
+<p>信号量也是进程间通信的一种方式，比如互斥锁的简单实现就是信号量，一个进程使用互斥锁，并通知（通信）其他想要该互斥锁的进程，阻止他们的访问和使用。</p>
+<h3 id="行为建模"><a class="header-anchor" href="#行为建模">¶</a>行为建模</h3>
+<p>Dijkstra提出，故术语PV操作出自荷兰文</p>
+<ul>
+<li>P(&amp;sem) - prolaag = try + decrease; wait; down; in
+<ul>
+<li>等待一个手环后返回</li>
+<li>如果此时管理员手上有空闲的手环，立即返回</li>
+</ul>
+</li>
+<li>V(&amp;sem) - verhoog = increase; post; up; out
+<ul>
+<li>变出一个手环，送给管理员</li>
+</ul>
+</li>
+</ul>
+<p>当有进程要求使用共享资源时，需要执行以下操作：</p>
+<p>1.系统首先要检测该资源的信号量；</p>
+<p>2.若该资源的信号量值大于0，则进程可以使用该资源，此时，进程将该资源的信号量值减1；</p>
+<p>3.若该资源的信号量值为0，则进程进入休眠状态，直到信号量值大于0时进程被唤醒，访问该资源；</p>
+<p>当进程不再使用由一个信号量控制的共享资源时，该信号量值增加1（V），如果此时有进程处于休眠状态等待此信号量，则该进程会被唤醒。</p>
+<h1>现代编程语言中的并发模型</h1>
+<h2 id="协程（coroutines）"><a class="header-anchor" href="#协程（coroutines）">¶</a>协程（coroutines）</h2>
+<ul>
+<li>多个可以保存/恢复的执行流</li>
+<li>比线程更轻量 (完全没有系统调用，也就没有操作系统状态)</li>
+</ul>
+<p>在一个没有多线程的程序里面，创建出若干个好像线程的东西。<code>co_start(fn)</code>会在内存中创建一个执行流<code>fn</code>，但是系统当中还是只有一个执行流在执行：先是一直执行<code>main</code>的代码，直至执行<code>co_yield()</code>，暂停当前的执行流，然后切换到另外一个执行流，该执行流从<code>fn</code>开始执行，<code>fn</code>执行完了之后会再次执行<code>co_yield</code>，就会回到之前的执行流去执行。</p>
+<p>协程和线程相比，坏处是无法使用多个CPU，无并行可言。<br>
+好处是，如果我们希望函数执行的时候帮我们算一个东西出来，并且执行流离开它时函数的状态可以得到保存，下一次执行流再切换回这个函数的时候它可以给我们计算出下一个东西，那么就可以使用协程来完成，Python的Generator就是这样的协程。</p>
+<h2 id="数据中心：协程和线程"><a class="header-anchor" href="#数据中心：协程和线程">¶</a>数据中心：协程和线程</h2>
+<p>数据中心</p>
+<ul>
+<li>同一时间有数千/数万个请求到达服务器</li>
+<li>计算部分
+<ul>
+<li>需要利用好多处理器
+<ul>
+<li>线程 → 这就是我擅长的</li>
+<li>协程 → 一人出力，他人摸鱼</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>I/O 部分
+<ul>
+<li>会在系统调用上 block (例如请求另一个服务或读磁盘)
+<ul>
+<li>协程 → 一人干等，他人围观</li>
+<li>线程 → 每个线程都占用可观的操作系统资源</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Go和Goroutine"><a class="header-anchor" href="#Go和Goroutine">¶</a>Go和Goroutine</h2>
+<p>面对协程和线程各自的问题，Goroutine应运而生，使用Go目前也成为了后端开发的趋势，兼顾多处理器并行和轻量级并发。</p>
+<p>Goroutine: 概念上是线程，实际是线程和协程的混合体</p>
+<ul>
+<li>
+<p>在每个CPU上都放一个线程，每个 CPU 上有一个 Go Worker，自由调度 Goroutines。两个CPU上的Goroutine可以是真正并行的。任何时刻单个CPU上只会有一个Goroutine运行。</p>
+</li>
+<li>
+<p>执行到 blocking API 时 (例如 sleep, read)</p>
+<p>Go Worker 偷偷改成 non-blocking 的版本：要执行<code>read</code>的时候，<code>read()</code>都会被替换成<code>tryread()</code></p>
+<ul>
+<li><code>tryread()</code>成功 → 立即继续执行Goroutine</li>
+<li><code>tryread()</code>失败 → 立即 yield 到另一个需要 CPU 的 Goroutine，操作系统会提供相关的api使得它可以在条件合适的时候被唤醒。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/20220914001607.png" alt></p>
+<p>太巧妙了！CPU 和操作系统全部用到 100%</p>
+<h1>身边的并发：Web 2.0</h1>
+<p>是什么成就了今天的 Web 2.0 ？</p>
+<ul>
+<li>浏览器中的并发编程：Ajax (Asynchronous JavaScript + XML)</li>
+<li>HTML (DOM Tree) + CSS 代表了你能看见的一切
+<ul>
+<li>通过 JavaScript 可以改变它</li>
+<li>通过 JavaScript 可以建立连接本地和服务器</li>
+</ul>
+</li>
+</ul>
+<h2 id="单线程-事件模型"><a class="header-anchor" href="#单线程-事件模型">¶</a>单线程 + 事件模型</h2>
+<p>我们需要的是尽可能少但又足够的并发。</p>
+<ul>
+<li>一个线程、全局的事件队列、按序执行 (run-to-complete)</li>
+<li>耗时的 API (Timer, Ajax, …) 调用会立即返回（网络请求和结果操作一定不是同一个事件，而是将不同的响应操作加入事件队列）
+<ul>
+<li>条件满足时向队列里增加一个事件</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$.ajax( &#123; <span class="attr">url</span>: <span class="string">&#x27;https://xxx.yyy.zzz/login&#x27;</span>,</span><br><span class="line">  <span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params">resp</span>) </span>&#123;</span><br><span class="line">    $.ajax( &#123; <span class="attr">url</span>: <span class="string">&#x27;https://xxx.yyy.zzz/cart&#x27;</span>,</span><br><span class="line">      <span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params">resp</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// do something</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">error</span>: <span class="function"><span class="keyword">function</span>(<span class="params">req, status, err</span>) </span>&#123; ... &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">error</span>: <span class="function"><span class="keyword">function</span>(<span class="params">req, status, err</span>) </span>&#123; ... &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="异步事件模型"><a class="header-anchor" href="#异步事件模型">¶</a>异步事件模型</h2>
+<p>好处</p>
+<ul>
+<li>并发模型简单了很多
+<ul>
+<li>函数的执行是原子的 (不能并行，减少了并发 bug 的可能性)</li>
+</ul>
+</li>
+<li>API 依然可以并行
+<ul>
+<li>适合网页这种 “大部分时间花在渲染和网络请求” 的场景
+<ul>
+<li>JavaScript 代码只负责 “描述” DOM Tree</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>坏处</p>
+<ul>
+<li>Callback hell (祖传屎山)
+<ul>
+<li>刚才的代码嵌套 5 层，可维护性已经接近于零了</li>
+</ul>
+</li>
+</ul>
+<p>导致 callback hell 的本质：人类脑袋里想的是 “流程图”，看到的是 “回调”。解决：Promise</p>
+<h1>并发bug</h1>
+<h2 id="死锁（Deadlock）"><a class="header-anchor" href="#死锁（Deadlock）">¶</a>死锁（Deadlock）</h2>
+<h3 id="死锁产生的四个必要条件："><a class="header-anchor" href="#死锁产生的四个必要条件：">¶</a>死锁产生的四个必要条件：</h3>
+<ul>
+<li>互斥：一个资源每次只能被一个进程使用</li>
+<li>请求与保持：一个进程请求资阻塞时，不释放已获得的资源</li>
+<li>不剥夺：进程已获得的资源不能强行剥夺</li>
+<li>循环等待：若干进程之间形成头尾相接的循环等待资源关系</li>
+</ul>
+<h3 id="避免死锁"><a class="header-anchor" href="#避免死锁">¶</a>避免死锁</h3>
+<ul>
+<li>任意时刻系统中的锁都是有限的</li>
+<li>严格按照固定的顺序获得所有锁，消除 “循环等待”</li>
+</ul>
+<h2 id="数据竞争（Data-Race）"><a class="header-anchor" href="#数据竞争（Data-Race）">¶</a>数据竞争（Data Race）</h2>
+<p>不同的线程同时访问同一段内存，且至少有一个是写。</p>
+<p>两个内存访问在 “赛跑”，“跑赢” 的操作先执行（如peterson算法）</p>
+<h3 id="解决"><a class="header-anchor" href="#解决">¶</a>解决</h3>
+<p><strong>用互斥锁保护好共享数据，消灭一切数据竞争</strong></p>
+<h3 id="例子"><a class="header-anchor" href="#例子">¶</a>例子</h3>
+<p>数据竞争相关典型的两种bug</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Case #1: 上错了锁（各上个的）</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">thread1</span><span class="params">()</span> </span>&#123; spin_lock(&amp;lk1); sum++; spin_unlock(&amp;lk1); &#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">thread2</span><span class="params">()</span> </span>&#123; spin_lock(&amp;lk2); sum++; spin_unlock(&amp;lk2); &#125;</span><br><span class="line"><span class="comment">// Case #2: 忘记上锁</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">thread1</span><span class="params">()</span> </span>&#123; spin_lock(&amp;lk1); sum++; spin_unlock(&amp;lk1); &#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">thread2</span><span class="params">()</span> </span>&#123; sum++; &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="动态分析工具：Sanitizers"><a class="header-anchor" href="#动态分析工具：Sanitizers">¶</a>动态分析工具：Sanitizers</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://clang.llvm.org/docs/AddressSanitizer.html">AddressSanitizer</a> (asan); <a target="_blank" rel="noopener" href="https://www.usenix.org/conference/atc12/technical-sessions/presentation/serebryany">(paper)</a>: 非法内存访问
+<ul>
+<li>Buffer (heap/stack/global) overflow, use-after-free, use-after-return, double-free, …</li>
+<li>Demo: <a target="_blank" rel="noopener" href="http://jyywiki.cn/pages/OS/2022/demos/uaf.c">uaf.c</a>; <a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/dev-tools/kasan.html">kasan</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">ThreadSanitizer</a> (tsan): 数据竞争
+<ul>
+<li>Demo: <a target="_blank" rel="noopener" href="http://jyywiki.cn/pages/OS/2022/demos/fish.c">fish.c</a>, <a target="_blank" rel="noopener" href="http://jyywiki.cn/pages/OS/2022/demos/sum.c">sum.c</a>, <a target="_blank" rel="noopener" href="http://jyywiki.cn/pages/OS/2022/demos/peterson-barrier.c">peterson-barrier.c</a>; <a target="_blank" rel="noopener" href="https://github.com/google/ktsan">ktsan</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://clang.llvm.org/docs/MemorySanitizer.html">MemorySanitizer</a> (msan): 未初始化的读取</li>
+<li><a target="_blank" rel="noopener" href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">UBSanitizer</a> (ubsan): undefined behavior
+<ul>
+<li>Misaligned pointer, signed integer overflow, …</li>
+<li>Kernel 会带着 <code>-fwrapv</code> 编译</li>
+</ul>
+</li>
+</ul>
+<h2 id="防御性编程"><a class="header-anchor" href="#防御性编程">¶</a>防御性编程</h2>
+<p>Canary (金丝雀) 对一氧化碳非常敏感，被用于预警矿井下的瓦斯泄露。计算机系统中也有 canary，“牺牲” 一些内存单元，来预警 memory error 的发生。即在栈的高地址低地址两端都留出缓冲区。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">浮世野指针</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://stantonjoy.github.io/2022/09/08/jyyOS-2/">https://stantonjoy.github.io/2022/09/08/jyyOS-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://stantonjoy.github.io" target="_blank">慎治の万事屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OS/">OS</a></div><div class="post_share"><div class="social-share" data-image="/img/Science.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/09/08/jyyOS-1/"><img class="prev-cover" src="/img/Science.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">jyyOS-1</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/23/R%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AE%B0/"><img class="next-cover" src="/img/Science.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">R语言笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/09/11/jyyOS-3/" title="jyyOS-3"><img class="cover" src="/img/Science.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-11</div><div class="title">jyyOS-3</div></div></a></div><div><a href="/2022/09/08/jyyOS-1/" title="jyyOS-1"><img class="cover" src="/img/Science.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-08</div><div class="title">jyyOS-1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">浮世野指针</div><div class="author-info__description">真正的闲暇并不是说什么也不做，而是能够自由地做自己感兴趣的事情。——Bernard Shaw</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Stanton-Morgan" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1377060711@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">いらしゃいませ（欢迎~）</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D%EF%BC%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">并发的基本单位：线程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">入门：thread.h 简化的线程 API</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">放弃</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">1. 原子性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%A1%BA%E5%BA%8F"><span class="toc-number">2.</span> <span class="toc-text">2. 顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">3. 可见性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">互斥</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E4%BA%92%E6%96%A5%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94Peterson-%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">一个互斥算法——Peterson 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B"><span class="toc-number">1.1.</span> <span class="toc-text">举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E6%8F%90%E4%BE%9B%E5%8E%9F%E5%AD%90%E6%8C%87%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">硬件提供原子指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%97%8B%E9%94%81"><span class="toc-number">3.</span> <span class="toc-text">自旋锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8-xchg-%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5"><span class="toc-number">3.1.</span> <span class="toc-text">用 xchg 实现互斥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Load-Reserved-Store-Conditional-LR-SC"><span class="toc-number">3.2.</span> <span class="toc-text">Load-Reserved&#x2F;Store-Conditional (LR&#x2F;SC)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E6%97%8B%E9%94%81%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="toc-number">3.3.</span> <span class="toc-text">自旋锁的缺陷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E6%97%8B%E9%94%81%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">3.4.</span> <span class="toc-text">自旋锁的使用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mutex%EF%BC%88%E4%BA%92%E6%96%A5%E9%94%81-%E7%9D%A1%E7%9C%A0%E9%94%81%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">mutex（互斥锁&#x2F;睡眠锁）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%97%8B%E9%94%81%C2%B7%E7%9D%A1%E7%9C%A0%E9%94%81%E5%88%86%E6%9E%90"><span class="toc-number">5.</span> <span class="toc-text">自旋锁·睡眠锁分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Futex-Fast-Userspace-muTexes"><span class="toc-number">6.</span> <span class="toc-text">Futex: Fast Userspace muTexes</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">生产者-消费者问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%EF%BC%9A%E4%B8%87%E8%83%BD%E5%90%8C%E6%AD%A5%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">条件变量：万能同步方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F-API"><span class="toc-number">2.1.</span> <span class="toc-text">条件变量 API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-number">2.2.</span> <span class="toc-text">习题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">信号量（semaphore）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA%E5%BB%BA%E6%A8%A1"><span class="toc-number">0.1.</span> <span class="toc-text">行为建模</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">现代编程语言中的并发模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E7%A8%8B%EF%BC%88coroutines%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">协程（coroutines）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%EF%BC%9A%E5%8D%8F%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">数据中心：协程和线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Go%E5%92%8CGoroutine"><span class="toc-number">3.</span> <span class="toc-text">Go和Goroutine</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">身边的并发：Web 2.0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B-%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">单线程 + 事件模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">异步事件模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text">并发bug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%EF%BC%88Deadlock%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">死锁（Deadlock）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E4%BA%A7%E7%94%9F%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">死锁产生的四个必要条件：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E6%AD%BB%E9%94%81"><span class="toc-number">1.2.</span> <span class="toc-text">避免死锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%AB%9E%E4%BA%89%EF%BC%88Data-Race%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">数据竞争（Data Race）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3"><span class="toc-number">2.1.</span> <span class="toc-text">解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">2.2.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%EF%BC%9ASanitizers"><span class="toc-number">3.</span> <span class="toc-text">动态分析工具：Sanitizers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B2%E5%BE%A1%E6%80%A7%E7%BC%96%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">防御性编程</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/25/BigData1-Scala/" title="BigData1-Scala"><img src="/img/Science.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BigData1-Scala"/></a><div class="content"><a class="title" href="/2022/09/25/BigData1-Scala/" title="BigData1-Scala">BigData1-Scala</a><time datetime="2022-09-25T07:33:25.000Z" title="发表于 2022-09-25 15:33:25">2022-09-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/15/SPA-01/" title="SPA-01"><img src="/img/Science.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SPA-01"/></a><div class="content"><a class="title" href="/2022/09/15/SPA-01/" title="SPA-01">SPA-01</a><time datetime="2022-09-15T14:19:04.656Z" title="发表于 2022-09-15 22:19:04">2022-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/11/jyyOS-3/" title="jyyOS-3"><img src="/img/Science.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jyyOS-3"/></a><div class="content"><a class="title" href="/2022/09/11/jyyOS-3/" title="jyyOS-3">jyyOS-3</a><time datetime="2022-09-11T15:10:04.108Z" title="发表于 2022-09-11 23:10:04">2022-09-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/08/jyyOS-1/" title="jyyOS-1"><img src="/img/Science.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jyyOS-1"/></a><div class="content"><a class="title" href="/2022/09/08/jyyOS-1/" title="jyyOS-1">jyyOS-1</a><time datetime="2022-09-08T15:33:25.000Z" title="发表于 2022-09-08 23:33:25">2022-09-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/08/jyyOS-2/" title="jyyOS-2"><img src="/img/Science.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jyyOS-2"/></a><div class="content"><a class="title" href="/2022/09/08/jyyOS-2/" title="jyyOS-2">jyyOS-2</a><time datetime="2022-09-08T11:24:06.910Z" title="发表于 2022-09-08 19:24:06">2022-09-08</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/Science.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 浮世野指针</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><div class="aplayer" data-id="2916766519" data-server="netease" data-type="playlist" data-fixed="true" data-listFolded="false" data-order="random" data-preload="none"></div><link rel="stylesheet" href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css"><script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":267},"mobile":{"show":true},"log":false});</script></body></html>
