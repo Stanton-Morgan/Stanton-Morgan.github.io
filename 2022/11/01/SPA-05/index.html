@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPA-05 | 慎治の万事屋</title><meta name="keywords" content="SPA"><meta name="author" content="浮世野指针"><meta name="copyright" content="浮世野指针"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="静态程序分析-过程间分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SPA-05">
+<meta property="og:url" content="https://stantonjoy.github.io/2022/11/01/SPA-05/index.html">
+<meta property="og:site_name" content="慎治の万事屋">
+<meta property="og:description" content="静态程序分析-过程间分析">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://stantonjoy.github.io/img/Science.jpg">
+<meta property="article:published_time" content="2022-10-31T16:45:25.000Z">
+<meta property="article:modified_time" content="2022-11-07T17:18:44.275Z">
+<meta property="article:author" content="浮世野指针">
+<meta property="article:tag" content="SPA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://stantonjoy.github.io/img/Science.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://stantonjoy.github.io/2022/11/01/SPA-05/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SPA-05',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-08 01:18:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><!--音乐--><div class="aplayer" data-id="2916766519" data-server="netease" data-type="playlist" data-fixed="true" data-listFolded="false" data-order="random" data-preload="none"></div><link rel="stylesheet" href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css"><script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/favicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fab fa-battle-net"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/Science.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">慎治の万事屋</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fab fa-battle-net"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 其他</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SPA-05</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-31T16:45:25.000Z" title="发表于 2022-11-01 00:45:25">2022-11-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-07T17:18:44.275Z" title="更新于 2022-11-08 01:18:44">2022-11-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CS/">CS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="SPA-05"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>Interprocedural Analysis</h1>
+<h2 id="Motivation"><a class="header-anchor" href="#Motivation">¶</a>Motivation</h2>
+<p>在常量传播中，<code>y = addOne(42)</code> 应该让 y 被视作一个常量（43），但是因为我们没有考虑过程间分析，就导致我们认为 y 是 NAC，这个结果过于保守了。</p>
+<p>因此我们需要实装过程间分析。</p>
+<h2 id="Call-Graph-Construction-CHA-based"><a class="header-anchor" href="#Call-Graph-Construction-CHA-based">¶</a>Call Graph Construction (CHA based)</h2>
+<p>所谓 Call Graph，就是指出一个方法会在其方法体内，对哪些其它方法进行调用。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">T f()&#123;</span><br><span class="line">    int a = S.g();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们就能在 call graph 上构建一条边： <code>T.f -&gt; S.g</code>。但是这个例子说着简单，现实中的情况是比较复杂的，这里我们就需要了解如何去构建 call gragh。</p>
+<p>CG 的构造方法主要有以下几种：</p>
+<ul>
+<li>Class hierarchy analysis CHA</li>
+<li>Rapid type analysis RTA</li>
+<li>Variable type analysis VTA</li>
+<li>Pointer analysis k-CFA</li>
+</ul>
+<p>越后面的越精确，而越靠前的速度越快，越有效率。</p>
+<p>在 Java 中有多种 method call，其中 virtual call 对分析至关重要。</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20211018162245409.png" alt></p>
+<p>以下是简单介绍，看看就好。</p>
+<ul>
+<li>Instruction：指 Java 的 <strong>IR 中的指令</strong></li>
+<li>Receiver objects：方法调用对应的实例对象（static 方法调用不需要对应实例）。</li>
+<li>Target methods：表达 <strong>IR 指令到被调用目标方法的映射关系</strong></li>
+<li>Num of target methods：call 对应的可能被调用的目标方法的数量。Virtual call与动态绑定和多态实现有关，可以对应多个对象下的重写方法。所以 <strong>virtual call的可能对象可能超过 1 个</strong>。</li>
+<li>Determinacy：指什么时候能够确定这个 call 的对应方法。Virtual call 与多态有关，只能在运行时决定调用哪一个具体方法的实现。其他两种 call 都和多态机制不相关，编译时刻就可以确定。</li>
+</ul>
+<p>在发生 virtual call 的时候，需要求解具体的方法究竟是什么。其中涉及到的机制叫 <strong>Method Dispatch</strong>.</p>
+<p>具体来说，对于一条调用 <code>y = x.foo(...);</code>，在编译时我们不能立刻确定 <code>x</code> 所指向的是哪个对象（考虑 <code>Number x = new One();</code>，<code>x</code> 调用的就不是 <code>Number</code> 类的 <code>foo</code> 方法），而在运行时，我们会知道 <code>x</code> 会指向某个确切的对象 <code>o</code>，这个时候就可以去解析 <code>o.foo(...)</code> 的具体内容是什么了。</p>
+<p>在 <code>o.foo(...);</code> 中，</p>
+<ul>
+<li>o 就是接收对象</li>
+<li>foo(…) 就是方法签名</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20211018163246861.png" alt></p>
+<p>给定对象的类 c 和函数签名 m，Dispatch 函数为：</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20211018163357081.png" alt></p>
+<p>这个方法就是在说，一个子类可能并没有自己实现某个方法，因此就要往父类去找，直到找到一个可用的实现位置。</p>
+<p>例如，对于这样一个继承结构：</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103115945118.png" alt></p>
+<p>有着如下的 dispatch 结果：</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103120013579.png" alt></p>
+<p>那么问题来了，刚刚说到，运行时是没法确定 <code>y = x.foo(...)</code> 的指向对象的。但是是不是完全没法确定呢？也不能这么说，1995 年，大牛 Jeff Dean 提出了一种方法：既然你也知道 <code>Number x = ...</code>，<code>x</code> 至少是 Number 类的对象。虽然我们不能知道 <code>x</code> 最后是 Number 对象还是它的一个子类对象，那么我们至少可以确定是 Number 及其继承类中的一个吧？</p>
+<p>所以，我们这里就采用变量声明的类型来确定可能的 call 类型（即 Class Hierarchy Analysis, CHA）。下面就是解析一个方法调用对应的方法的算法：</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103121056412.png" alt></p>
+<p>第一种情况是 <code>y = T.m(...)</code>，静态方法可以直接确定类是哪个，就不用去找继承结构了。</p>
+<p>第二种情况是 <code>new T(...)</code>，既然你知道你在调用谁的构造函数，那么也当然不用去找继承结构。当然还有其它的 special call（例如 <code>this.m(...)</code>），但是最后的结论都是一样的。</p>
+<p>第三章情况就是 <code>y = x.m(...)</code> 了，这里的算法的意思是说，我把声明类型及其所有的子类都 dispatch 一遍，把可能的结果返回给你。</p>
+<p>举个例子，现在有这么一个继承结构：</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103121527898.png" alt></p>
+<p>有着如下结果：</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103121646921.png" alt></p>
+<p>但是请考虑 <code>B b = ...; b.foo()</code>。按照算法，resolve 的结果是和 A 一样的，但是假设我们能知道，最后 <code>B b = new B()</code>，岂不是会多分析出两个可能的方法了？</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103121813073.png" alt></p>
+<p>现在我们总结一下，基于 CHA 来构建 call graph 的优缺点：</p>
+<ul>
+<li>优点：快，因为声明信息是很好获取的。</li>
+<li>缺点：不够精确。这个问题需要指针分析来解决。</li>
+</ul>
+<p>最后我们得到基于 CHA 来构建 call graph 的算法。</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103122057126.png" alt></p>
+<p>这个算法应该是很好理解的，它相当于是从 entry method 构建一个可达图。</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103123125893.png" alt></p>
+<p>下面我们将展示讲义中例子的一个断点，来表述 CHA 的不精确性：</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103122236130.png" alt></p>
+<p>可以看到，A a 已经是明确指向 A 对象了，但是由于 CHA 的不精确性，我们依然往 B.bar() 和 C.bar() 加了边。</p>
+<h2 id="Interprocedural-Control-Flow-Graph"><a class="header-anchor" href="#Interprocedural-Control-Flow-Graph">¶</a>Interprocedural Control-Flow Graph</h2>
+<p>ICFG 就是通过在 CFG 的基础上加上 call edge 和 return edge。Call edge 是从 call site 连到 method entry 的，而 return edge 是从 method exit 连到 call site之后的一个语句的。（之所以是 exit 而不是 return 语句的 node，是因为可能存在多个 return 点，此时需要对这些 return 点做一个合并。）</p>
+<p>那么我们要如何知道一个 call site 要往那个方法的 entry 和 exit 上连边呢？这就用到了刚刚说到的 call gragh 了。</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103123943802.png" alt></p>
+<p>但是这样的修改还不够，因为会存在一些不精确性。具体请看下一章节。</p>
+<h2 id="Interprocedural-Data-Flow-Analysis"><a class="header-anchor" href="#Interprocedural-Data-Flow-Analysis">¶</a>Interprocedural Data-Flow Analysis</h2>
+<p>还记得过程内的数据流分析的两个要素：</p>
+<ul>
+<li>node 内如何使 data fact 发生变化；</li>
+<li>node 如何通过边收集/传递 data fact。</li>
+</ul>
+<p>在过程内分析中，边只有一种，所以收集/传递时只需要原样传递 data fact。但是，考虑过程间分析后，我们就不能直接把 caller 的 fact 传到 callee 上了，而是应该通过方法的调用参数来进行 fact 的转换。</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103125112158.png" alt></p>
+<p>同样地，return edge 需要把返回值返回到接收变量上。</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103125933773.png" alt></p>
+<p>最后我们需要考虑一个问题：</p>
+<p><img src="https://raw.githubusercontent.com/StantonJoY/ImgStorage/main/image-20220103130122403.png" alt></p>
+<p>我们在过程间常量传播的设计中，caller 的 fact 会和 return value 冲突。一种自然的处理方法是在 call site 把 b 的值 kill 掉，2020 年的教学版本也是这么做的。但是，如果在 node 阶段就 kill 掉 b，那么如果 b 是方法调用的一个参数，就没有常量值可以传过去了。</p>
+<p>因此，2021 年的版本明确了使用 call to return edge 来 kill 掉 b，遇到 call site 的时候，fact 直接原样复制。这就避免了上面所说的问题。</p>
+<h2 id="划重点"><a class="header-anchor" href="#划重点">¶</a>划重点</h2>
+<ul>
+<li>如何用 CHA 建 CG</li>
+<li>ICFG 的概念</li>
+<li>过程间数据流分析的概念</li>
+<li>过程间的常量分析</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">浮世野指针</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://stantonjoy.github.io/2022/11/01/SPA-05/">https://stantonjoy.github.io/2022/11/01/SPA-05/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://stantonjoy.github.io" target="_blank">慎治の万事屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SPA/">SPA</a></div><div class="post_share"><div class="social-share" data-image="/img/Science.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/07/SPA-06/"><img class="prev-cover" src="/img/Science.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SPA-06</div></div></a></div><div class="next-post pull-right"><a href="/2022/10/23/SPA-04/"><img class="next-cover" src="/img/Science.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">SPA-04</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/09/08/SPA-01/" title="SPA-01"><img class="cover" src="/img/Science.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-08</div><div class="title">SPA-01</div></div></a></div><div><a href="/2022/10/23/SPA-04/" title="SPA-04"><img class="cover" src="/img/Science.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-23</div><div class="title">SPA-04</div></div></a></div><div><a href="/2022/09/26/SPA-02/" title="SPA-02"><img class="cover" src="/img/Science.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-26</div><div class="title">SPA-02</div></div></a></div><div><a href="/2022/10/01/SPA-03/" title="SPA-03"><img class="cover" src="/img/Science.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-01</div><div class="title">SPA-03</div></div></a></div><div><a href="/2022/11/07/SPA-06/" title="SPA-06"><img class="cover" src="/img/Science.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-07</div><div class="title">SPA-06</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">浮世野指针</div><div class="author-info__description">真正的闲暇并不是说什么也不做，而是能够自由地做自己感兴趣的事情。——Bernard Shaw</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Stanton-Morgan" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1377060711@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">いらしゃいませ（欢迎~）</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Interprocedural Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation"><span class="toc-number">1.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Call-Graph-Construction-CHA-based"><span class="toc-number">1.2.</span> <span class="toc-text">Call Graph Construction (CHA based)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interprocedural-Control-Flow-Graph"><span class="toc-number">1.3.</span> <span class="toc-text">Interprocedural Control-Flow Graph</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interprocedural-Data-Flow-Analysis"><span class="toc-number">1.4.</span> <span class="toc-text">Interprocedural Data-Flow Analysis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%92%E9%87%8D%E7%82%B9"><span class="toc-number">1.5.</span> <span class="toc-text">划重点</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/24/Christmas%20Eve/" title="Christmas Eve"><img src="/img/Reading.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Christmas Eve"/></a><div class="content"><a class="title" href="/2022/12/24/Christmas%20Eve/" title="Christmas Eve">Christmas Eve</a><time datetime="2022-12-23T17:33:25.000Z" title="发表于 2022-12-24 01:33:25">2022-12-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/23/ORANGE'S-3.1/" title="保护模式-1"><img src="/img/Science.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="保护模式-1"/></a><div class="content"><a class="title" href="/2022/11/23/ORANGE'S-3.1/" title="保护模式-1">保护模式-1</a><time datetime="2022-11-23T14:25:25.000Z" title="发表于 2022-11-23 22:25:25">2022-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/23/ORANGE'S-7/" title="IO系统"><img src="/img/Science.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IO系统"/></a><div class="content"><a class="title" href="/2022/11/23/ORANGE'S-7/" title="IO系统">IO系统</a><time datetime="2022-11-23T14:25:25.000Z" title="发表于 2022-11-23 22:25:25">2022-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/23/ORANGE'S-3.2/" title="保护模式-2"><img src="/img/Science.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="保护模式-2"/></a><div class="content"><a class="title" href="/2022/11/23/ORANGE'S-3.2/" title="保护模式-2">保护模式-2</a><time datetime="2022-11-23T14:25:25.000Z" title="发表于 2022-11-23 22:25:25">2022-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/14/OSLab2/" title="OSLab2"><img src="/img/Science.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OSLab2"/></a><div class="content"><a class="title" href="/2022/11/14/OSLab2/" title="OSLab2">OSLab2</a><time datetime="2022-11-14T02:33:25.000Z" title="发表于 2022-11-14 10:33:25">2022-11-14</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/Science.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 浮世野指针</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><div class="aplayer" data-id="2916766519" data-server="netease" data-type="playlist" data-fixed="true" data-listFolded="false" data-order="random" data-preload="none"></div><link rel="stylesheet" href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css"><script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":267},"mobile":{"show":true},"log":false});</script></body></html>
